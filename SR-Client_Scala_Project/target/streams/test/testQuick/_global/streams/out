@@ -1,0 +1,11 @@
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(ClientTest, org.scalatest.tools.Framework$$anon$1@511fa998, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mClientTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should be able to login player[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should be able to move player[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 1 second, 68 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 2[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 1, aborted 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 2, failed 0, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mAll tests passed.[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mPassed tests:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ClientTest[0m

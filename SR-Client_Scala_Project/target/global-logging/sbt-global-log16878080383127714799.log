@@ -1,0 +1,62 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(testQuick, Some(14c05d72-9aa8-4674-a617-d61588006a71), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Test / testQuick[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to C:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\target\scala-2.13\test-classes ...[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:1:8: object NotUsed is not a member of package akka[0m
+[0m[[0m[31merror[0m] [0m[0mimport akka.NotUsed[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:2:13: object actor is not a member of package akka[0m
+[0m[[0m[31merror[0m] [0m[0mimport akka.actor.ActorSystem[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:5:13: object stream is not a member of package akka[0m
+[0m[[0m[31merror[0m] [0m[0mimport akka.stream.ActorMaterializer[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:6:13: object stream is not a member of package akka[0m
+[0m[[0m[31merror[0m] [0m[0mimport akka.stream.scaladsl.{Flow, Keep, Sink, Source}[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:7:13: object stream is not a member of package akka[0m
+[0m[[0m[31merror[0m] [0m[0mimport akka.stream.testkit.TestSubscriber[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:8:13: object stream is not a member of package akka[0m
+[0m[[0m[31merror[0m] [0m[0mimport akka.stream.testkit.scaladsl.TestSink[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:15:24: not found: type ActorSystem[0m
+[0m[[0m[31merror[0m] [0m[0m  implicit val system: ActorSystem = ActorSystem()[0m
+[0m[[0m[31merror[0m] [0m[0m                       ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:15:38: not found: value ActorSystem[0m
+[0m[[0m[31merror[0m] [0m[0m  implicit val system: ActorSystem = ActorSystem()[0m
+[0m[[0m[31merror[0m] [0m[0m                                     ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:16:30: not found: type ActorMaterializer[0m
+[0m[[0m[31merror[0m] [0m[0m  implicit val materializer: ActorMaterializer = ActorMaterializer()[0m
+[0m[[0m[31merror[0m] [0m[0m                             ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:16:50: not found: value ActorMaterializer[0m
+[0m[[0m[31merror[0m] [0m[0m  implicit val materializer: ActorMaterializer = ActorMaterializer()[0m
+[0m[[0m[31merror[0m] [0m[0m                                                 ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:18:17: not found: type Sink[0m
+[0m[[0m[31merror[0m] [0m[0m  val testSink: Sink[Message, TestSubscriber.Probe[Message]] = TestSink.probe[Message][0m
+[0m[[0m[31merror[0m] [0m[0m                ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:18:64: not found: value TestSink[0m
+[0m[[0m[31merror[0m] [0m[0m  val testSink: Sink[Message, TestSubscriber.Probe[Message]] = TestSink.probe[Message][0m
+[0m[[0m[31merror[0m] [0m[0m                                                               ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:20:18: not found: value Source[0m
+[0m[[0m[31merror[0m] [0m[0m  val outgoing = Source.empty[Message][0m
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:23:22: not found: type Flow[0m
+[0m[[0m[31merror[0m] [0m[0m  val webSocketFlow: Flow[Message, Message, Future[WebSocketUpgradeResponse]] = Http().webSocketClientFlow(WebSocketRequest("ws://localhost:8080/?playerName=Bob"))[0m
+[0m[[0m[31merror[0m] [0m[0m                     ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:23:81: Symbol 'type akka.actor.ExtensionId' is missing from the classpath.[0m
+[0m[[0m[31merror[0m] [0m[0mThis symbol is required by 'object akka.http.scaladsl.Http'.[0m
+[0m[[0m[31merror[0m] [0m[0mMake sure that type ExtensionId is in your classpath and check for conflicting dependencies with `-Ylog-classpath`.[0m
+[0m[[0m[31merror[0m] [0m[0mA full rebuild may help if 'Http.class' was compiled against an incompatible version of akka.actor.[0m
+[0m[[0m[31merror[0m] [0m[0m  val webSocketFlow: Flow[Message, Message, Future[WebSocketUpgradeResponse]] = Http().webSocketClientFlow(WebSocketRequest("ws://localhost:8080/?playerName=Bob"))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:35:13: value request is not a member of Any[0m
+[0m[[0m[31merror[0m] [0m[0m  testProbe.request(1)[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:36:32: value expectNext is not a member of Any[0m
+[0m[[0m[31merror[0m] [0m[0m  val msg: Message = testProbe.expectNext()[0m
+[0m[[0m[31merror[0m] [0m[0m                               ^[0m
+[0m[[0m[31merror[0m] [0m[0m17 errors found[0m
+[0m[[0m[31merror[0m] [0m[0m(Test / [31mcompileIncremental[0m) Compilation failed[0m
+[0m[[0m[31merror[0m] [0m[0mTotal time: 0 s, completed 21 janv. 2024 à 19:08:15[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m

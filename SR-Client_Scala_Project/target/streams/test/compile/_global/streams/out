@@ -1,0 +1,11 @@
+[0m[[0m[33mwarn[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:57:16: Implicit definition should have explicit type (inferred spray.json.RootJsonFormat[Position]) [quickfixable][0m
+[0m[[0m[33mwarn[0m] [0m[0m  implicit val positionFormat = jsonFormat2(Position)[0m
+[0m[[0m[33mwarn[0m] [0m[0m               ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\src\test\scala\ClientTest.scala:58:16: Implicit definition should have explicit type (inferred spray.json.RootJsonFormat[Player]) [quickfixable][0m
+[0m[[0m[33mwarn[0m] [0m[0m  implicit val playerFormat = jsonFormat2(Player)[0m
+[0m[[0m[33mwarn[0m] [0m[0m               ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m7 deprecations (since 2.6.0)[0m
+[0m[[0m[33mwarn[0m] [0m[0m1 deprecation (since 2.6.11)[0m
+[0m[[0m[33mwarn[0m] [0m[0m2 deprecations (since 2.7.0)[0m
+[0m[[0m[33mwarn[0m] [0m[0m10 deprecations in total; re-run with -deprecation for details[0m
+[0m[[0m[33mwarn[0m] [0m[0m6 warnings found[0m

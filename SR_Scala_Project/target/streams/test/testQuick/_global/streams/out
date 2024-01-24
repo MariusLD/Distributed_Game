@@ -1,0 +1,15 @@
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(ServerTest, org.scalatest.tools.Framework$$anon$1@3112a4b2, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mServerTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should create empty GameService[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should be able to connect to the GameService websocket[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should respond with correct message[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should register player[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should register multiple players[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should register player and move it up[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 1 second, 509 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 6[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 1, aborted 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 6, failed 0, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mAll tests passed.[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mPassed tests:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ServerTest[0m

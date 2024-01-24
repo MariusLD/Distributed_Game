@@ -1,0 +1,8 @@
+[0m[[0m[33mwarn[0m] [0m[0mC:\Users\Megaport\IdeaProjects\SR_Scala_Project\src\main\scala\GameService.scala:24:68: match may not be exhaustive.[0m
+[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following inputs: Streamed(_), Strict(_), _[0m
+[0m[[0m[33mwarn[0m] [0m[0m      val messagesToGameEventsFlow = builder.add(Flow[Message].map {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                   ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m6 deprecations (since 2.6.0)[0m
+[0m[[0m[33mwarn[0m] [0m[0m1 deprecation (since 2.6.16)[0m
+[0m[[0m[33mwarn[0m] [0m[0m7 deprecations in total; re-run with -deprecation for details[0m
+[0m[[0m[33mwarn[0m] [0m[0mfour warnings found[0m

@@ -1,0 +1,14 @@
+[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = C:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\target\scala-2.13\test-classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0mAbout to delete class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ClientTest.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mWe backup class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ClientTest.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mRegistering generated classes:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Position$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Player$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ClientTest.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Position.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Client.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Client$$anonfun$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Player.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mRemoving the temporary directory used for backing up class files: C:\Users\Megaport\IdeaProjects\SR-Client_Scala_Project\target\scala-2.13\test-classes.bak[0m
