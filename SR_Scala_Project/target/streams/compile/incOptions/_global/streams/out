@@ -1,2 +1,60 @@
-[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = C:\Users\Megaport\IdeaProjects\SR_Scala_Project\target\scala-2.13\classes.bak[0m
-[0m[[0m[0mdebug[0m] [0m[0mRemoving the temporary directory used for backing up class files: C:\Users\Megaport\IdeaProjects\SR_Scala_Project\target\scala-2.13\classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = C:\Users\Megaport\IdeaProjects\Distributed_Game\SR_Scala_Project\target\scala-2.13\classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0mAbout to delete class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerMoveRequest$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayersChanged.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerWithActor$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerJoined$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Position.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	GameEvent.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	GameAreaActor$$anonfun$receive$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	GameAreaActor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerJoined.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Position$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerLeft$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerWithActor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Player.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerLeft.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerMoveRequest.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Player$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayersChanged$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mWe backup class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerMoveRequest$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayersChanged.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerWithActor$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerJoined$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Position.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	GameEvent.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	GameAreaActor$$anonfun$receive$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	GameAreaActor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerJoined.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Position$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerLeft$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerWithActor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Player.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerLeft.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerMoveRequest.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Player$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayersChanged$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mRegistering generated classes:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerMoveRequest$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayersChanged.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerWithActor$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerJoined$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Position.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	FoodSpawned.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	FoodSpawned$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	GameEvent.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	GameAreaActor$$anonfun$receive$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	GameAreaActor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Food.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerJoined.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Food$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Position$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerLeft$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerWithActor.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Player.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerLeft.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayerMoveRequest.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Player$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PlayersChanged$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mRemoving the temporary directory used for backing up class files: C:\Users\Megaport\IdeaProjects\Distributed_Game\SR_Scala_Project\target\scala-2.13\classes.bak[0m

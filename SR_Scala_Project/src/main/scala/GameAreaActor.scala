@@ -1,16 +1,19 @@
 import akka.actor.{Actor, ActorRef}
 
 import scala.collection.mutable
+import scala.util.Random
 
 class GameAreaActor extends Actor {
 
   val players: mutable.Map[String, PlayerWithActor] = mutable.LinkedHashMap[String, PlayerWithActor]()
+  var foods: List[Food] = List.empty[Food]
+  generateFood(10)
 
   override def receive: Receive = {
-    case PlayerJoined(player, actor) => {
+    case PlayerJoined(player, actor) =>
       players += (player.name -> PlayerWithActor(player, actor))
-      notifyPlayersChanged()
-    } // Reach players' actor
+      println(s"Player joined: ${player.name}")
+      notifyPlayersChanged()// Reach players' actor
     case PlayerLeft(playerName) => {
       players -= playerName
       notifyPlayersChanged()
@@ -25,13 +28,43 @@ class GameAreaActor extends Actor {
       val oldPlayerWithActor = players(playerName)
       val oldPlayer = oldPlayerWithActor.player
       val actor = oldPlayerWithActor.actor
-      players(playerName) = PlayerWithActor(Player(playerName, oldPlayer.position + offset), actor)
+      var newPlayer = Player(playerName, oldPlayer.position, oldPlayer.score)
+      if (!playerOnNextPosition(oldPlayer.position + offset)) {
+        newPlayer = Player(playerName, oldPlayer.position + offset, oldPlayer.score + bool2int(foodOnNextPosition(oldPlayer.position + offset)))
+        foods = foods.filterNot(f => newPlayer.position == f.position)
+      }
+
+      foods = foods.filterNot(f => newPlayer.position == f.position)
+      //if (foods.isEmpty) notifyWinner()
+
+      players(playerName) = PlayerWithActor(newPlayer, actor)
       notifyPlayersChanged()
     }
   }
 
+  def bool2int(b: Boolean): Int = if (b) 1 else 0
+  def playerOnNextPosition(position: Position): Boolean = {
+    players.values.exists(_.player.position == position)
+  }
+
+  def foodOnNextPosition(position: Position): Boolean = {
+    foods.exists(_.position == position)
+  }
   def notifyPlayersChanged(): Unit = {
-    players.values.foreach(_.actor ! PlayersChanged(players.values.map(_.player)))
+    val updatedPlayers = players.values.map(_.player).toList
+    val updatedFoods = foods
+    players.values.foreach(_.actor ! PlayersChanged(updatedPlayers, updatedFoods))
+    println(s"Sent updated players and foods to clients: $updatedPlayers, $updatedFoods")
+  }
+
+  def generateFood(n: Int): Unit = {
+    for (_ <- 1 to n) {
+      var randomPosition = Position(Random.nextInt(6), Random.nextInt(6))
+      while (foods.exists(_.position == randomPosition) || players.values.exists(_.player.position == randomPosition)) {
+        randomPosition = Position(Random.nextInt(6), Random.nextInt(6))
+      }
+      foods = Food(randomPosition) :: foods
+    }
   }
 }
 
@@ -39,10 +72,11 @@ trait GameEvent
 case class PlayerJoined(player: Player, actorRef: ActorRef) extends GameEvent
 case class PlayerLeft(playerName: String) extends GameEvent
 case class PlayerMoveRequest(playerName: String, direction: String) extends GameEvent
-case class PlayersChanged(players: Iterable[Player]) extends GameEvent
-
-case class Player(name: String, position: Position)
+case class PlayersChanged(players: Iterable[Player], foods: Iterable[Food]) extends GameEvent
+case class Player(name: String, position: Position, score: Int = 0)
 case class PlayerWithActor(player: Player, actor: ActorRef)
 case class Position(x: Int, y: Int) {
   def +(other: Position): Position = Position(x + other.x, y + other.y)
 }
+
+case class Food(position: Position)

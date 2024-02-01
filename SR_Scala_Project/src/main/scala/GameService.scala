@@ -27,13 +27,18 @@ class GameService(implicit val actorSystem : ActorSystem, implicit val actorMate
 
       // flow that converts game events to messages
       val gameEventsToMessagesFlow = builder.add(Flow[GameEvent].map {
-        case PlayersChanged(players) => {
+        case PlayersChanged(players, foods) =>
           import spray.json._
           import DefaultJsonProtocol._
           implicit val positionFormat: RootJsonFormat[Position] = jsonFormat2(Position)
-          implicit val playerFormat: RootJsonFormat[Player] = jsonFormat2(Player)
-          TextMessage(players.toJson.toString)
-        }
+          implicit val playerFormat: RootJsonFormat[Player] = jsonFormat3(Player)
+          implicit val foodFormat: RootJsonFormat[Food] = jsonFormat1(Food)
+
+          val playersJson = players.toJson.toString
+          val foodsJson = foods.toJson.toString
+
+          val combinedJson = s"""{"players": $playersJson, "foods": $foodsJson}"""
+          TextMessage(combinedJson)
       })
 
       val gameAreaActorSink = Sink.actorRef[GameEvent](gameAreaActor, PlayerLeft(playerName))
