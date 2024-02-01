@@ -35,10 +35,15 @@ class GameAreaActor extends Actor {
       }
 
       foods = foods.filterNot(f => newPlayer.position == f.position)
-      //if (foods.isEmpty) notifyWinner()
 
       players(playerName) = PlayerWithActor(newPlayer, actor)
       notifyPlayersChanged()
+
+      if (foods.isEmpty) {
+        players.values.foreach(_.actor ! GameEnded())
+        players.clear()
+        generateFood(10)
+      }
     }
   }
 
@@ -75,6 +80,7 @@ case class PlayerMoveRequest(playerName: String, direction: String) extends Game
 case class PlayersChanged(players: Iterable[Player], foods: Iterable[Food]) extends GameEvent
 case class Player(name: String, position: Position, score: Int = 0)
 case class PlayerWithActor(player: Player, actor: ActorRef)
+case class GameEnded() extends GameEvent
 case class Position(x: Int, y: Int) {
   def +(other: Position): Position = Position(x + other.x, y + other.y)
 }

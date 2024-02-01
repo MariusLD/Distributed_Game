@@ -39,6 +39,7 @@ class GameService(implicit val actorSystem : ActorSystem, implicit val actorMate
 
           val combinedJson = s"""{"players": $playersJson, "foods": $foodsJson}"""
           TextMessage(combinedJson)
+        case GameEnded() => TextMessage("Game ended")
       })
 
       val gameAreaActorSink = Sink.actorRef[GameEvent](gameAreaActor, PlayerLeft(playerName))

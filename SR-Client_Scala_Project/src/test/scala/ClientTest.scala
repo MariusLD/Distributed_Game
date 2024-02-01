@@ -16,9 +16,12 @@ import scalafx.scene.paint.Color
 import scalafx.scene.shape.{Circle, Rectangle}
 import scalafx.scene.text.Text
 import scalafx.Includes._
+import scalafx.scene.control.{Alert, ButtonType, TextInputDialog}
+import scalafx.scene.control.Alert.AlertType
 import spray.json.DefaultJsonProtocol
 
-import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.{Future, Promise}
 import scala.io.StdIn
 
 class ClientTest extends AnyFunSuite with Matchers {
@@ -56,31 +59,49 @@ object Main {
     val client = new Client(name)
     val display = new Display()
     val input = Source.actorRef[String](5,OverflowStrategy.dropNew)
-    val output = display.sink
+
+    val promise = Promise[ActorRef]()
+    val futureInputMat = promise.future
+
+    val keyBoardHandler = new KeyBoardHandler(futureInputMat)
+
+    // Define output before calling display.sink
+    val output: Sink[Either[String, (List[Player], List[Food])], Future[Done]] = Sink.foreach {
+      case Left(gameEndedMessage) => println(gameEndedMessage)
+      case Right((players, foods)) => println(s"Players: $players, Foods: $foods")
+    }
+
+    val sink = display.sink(input, display, args, client, keyBoardHandler, output)
+
     print("Starting client")
-    val ((inputMat,result),outputMat) = client.run(input,output)
-    val keyBoardHandler = new KeyBoardHandler(inputMat)
+    val ((inputMat,result),outputMat) = client.run(input,sink)
+    promise.success(inputMat)
+
     new GUI(keyBoardHandler,display).main(args)
   }
 }
 
-class Client(playerName : String)(implicit val actorSystem: ActorSystem, implicit val actorMaterializer: ActorMaterializer) extends DefaultJsonProtocol {
+class Client(var playerName : String)(implicit val actorSystem: ActorSystem, implicit val actorMaterializer: ActorMaterializer) extends DefaultJsonProtocol {
   import spray.json._
   implicit val positionFormat: RootJsonFormat[Position] = jsonFormat2(Position)
   implicit val foodFormat: RootJsonFormat[Food] = jsonFormat1(Food)
   implicit val playerFormat: RootJsonFormat[Player] = jsonFormat3(Player)
 
-  val webSocketFlow: Flow[Message, (List[Player], List[Food]), Future[WebSocketUpgradeResponse]] =
+  val webSocketFlow: Flow[Message, Either[String, (List[Player], List[Food])], Future[WebSocketUpgradeResponse]] =
     Http().webSocketClientFlow(WebSocketRequest(s"ws://localhost:8080/?playerName=$playerName")).collect {
       case TextMessage.Strict(strMsg) =>
-        val parsed = strMsg.parseJson.asJsObject
-        val players = parsed.fields("players").convertTo[List[Player]]
-        val foods = parsed.fields("foods").convertTo[List[Food]]
-        (players, foods)
+        if (strMsg == "Game ended") {
+          Left(strMsg)
+        } else {
+          val parsed = strMsg.parseJson.asJsObject
+          val players = parsed.fields("players").convertTo[List[Player]]
+          val foods = parsed.fields("foods").convertTo[List[Food]]
+          Right((players, foods))
+        }
     }
 
   // 10:59
-  def run[M1, M2](input: Source[String, M1], output: Sink[(List[Player], List[Food]), M2]): ((M1, Future[WebSocketUpgradeResponse]), M2) = {
+  def run[M1, M2](input: Source[String, M1], output: Sink[Either[String, (List[Player], List[Food])], M2]): ((M1, Future[WebSocketUpgradeResponse]), M2) = {
     input.map(direction => TextMessage(direction))
       .viaMat(webSocketFlow)(Keep.both)
       .toMat(output)(Keep.both)
@@ -92,12 +113,12 @@ case class Player(name: String, position: Position, score: Int = 0)
 case class Food(position: Position)
 case class Position(x: Int, y: Int)
 
-class KeyBoardHandler(keyboardEventsReceiver: ActorRef) {
+class KeyBoardHandler(var keyboardEventsReceiver: Future[ActorRef]) {
   def handle(keyEvent: KeyEvent) = keyEvent.code match {
-    case KeyCode.Up => keyboardEventsReceiver ! "down" //scalafx coordinates are reversed
-    case KeyCode.Down => keyboardEventsReceiver ! "up"
-    case KeyCode.Left => keyboardEventsReceiver ! "left"
-    case KeyCode.Right => keyboardEventsReceiver ! "right"
+    case KeyCode.Up => keyboardEventsReceiver.map(_ ! "down") //scalafx coordinates are reversed
+    case KeyCode.Down => keyboardEventsReceiver.map(_ ! "up")
+    case KeyCode.Left => keyboardEventsReceiver.map(_ ! "left")
+    case KeyCode.Right => keyboardEventsReceiver.map(_ ! "right")
   }
 }
 
@@ -110,28 +131,56 @@ class Display() {
     minHeight = ScreenSize
   }
 
-  def sink: Sink[(List[Player], List[Food]), Future[Done]] = Sink.foreach[(List[Player], List[Food])] { case (players, foods) =>
-    val playerShapes = players.map(createPlayerShape)
-    val foodShapes = foods.map(createFoodShape)
-    val shapes = playerShapes ++ foodShapes
+  def sink(input: Source[String, ActorRef], display: Display, args: Array[String], client: Client, keyBoardHandler: KeyBoardHandler, output: Sink[Either[String, (List[Player], List[Food])], Future[Done]]): Sink[Either[String, (List[Player], List[Food])], Future[Done]] = Sink.foreach[Either[String, (List[Player], List[Food])]] {
+    case Left(gameEndedMessage) =>
+      Platform.runLater {
+        val dialog = new TextInputDialog() {
+          title = "Game Ended"
+          headerText = gameEndedMessage
+          contentText = "The game has ended. Do you want to rejoin the game? Please enter your name:"
+        }
+        val result = dialog.showAndWait()
+        result match {
+          case Some(name) =>
+            client.playerName = name
+            val promise = Promise[ActorRef]()
+            val ((inputMat: ActorRef, result), outputMat) = client.run(input, output)
+            promise.success(inputMat)
+            keyBoardHandler.keyboardEventsReceiver = promise.future
+          case None =>
+            System.exit(0)
+        }
+      }
+    case Right((players, foods)) =>
+      val playerShapes = players.map(player => createPlayerShape(player, players))
+      val foodShapes = foods.map(createFoodShape)
+      val shapes = playerShapes ++ foodShapes
 
-    Platform.runLater {
-      panel.children = shapes
-      panel.requestFocus()
-    }
+      Platform.runLater {
+        panel.children = shapes
+        panel.requestFocus()
+      }
   }
 
-  def createPlayerShape(player: Player): StackPane = {
+  def createPlayerShape(player: Player, allPlayers: List[Player]): StackPane = {
+    val isBestPlayer = getBestPlayers(allPlayers).contains(player)
+    val circleColor = if (isBestPlayer) Color.Gold else Color.Blue
+    val playerName = player.name + " " + player.score + (if (isBestPlayer) " 👑" else "")
     new StackPane {
       layoutX = player.position.x * PlayerRadius
       layoutY = player.position.y * PlayerRadius
       children = Seq(new Circle {
         radius = PlayerRadius * 0.5
-        fill = Color.Blue
+        fill = circleColor
       }, new Text {
-        text = player.name
+        text = playerName
       })
     }
+  }
+
+  def getBestPlayers(players: List[Player]): List[Player] = {
+    val maxScore = players.map(_.score).max
+    players.filter(_.score == maxScore)
   }
 
   def createFoodShape(food: Food): Rectangle = {
