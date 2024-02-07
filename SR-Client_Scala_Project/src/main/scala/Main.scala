@@ -27,12 +27,13 @@ object Main {
       case Right((players, foods)) => println(s"Players: $players, Foods: $foods")
     }
 
-    val sink = display.sink(input, display, args, client, keyBoardHandler, output)
+    val gui = new GUI(keyBoardHandler, display)
+    val sink = display.sink(input, display, args, client, keyBoardHandler, output, gui)
 
     print("Starting client")
     val ((inputMat, result), outputMat) = client.run(input, sink)
     promise.success(inputMat)
 
-    new GUI(keyBoardHandler, display).main(args)
+    gui.main(args)
   }
 }

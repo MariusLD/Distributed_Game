@@ -1,5 +1,6 @@
 import akka.Done
-import akka.actor.ActorRef
+import akka.actor.{ActorRef, ActorSystem}
+import akka.stream.{ActorMaterializer, OverflowStrategy}
 import akka.stream.scaladsl.{Sink, Source}
 import ressources.{Food, Player}
 import scalafx.application.Platform
@@ -10,6 +11,7 @@ import scalafx.scene.shape.{Circle, Rectangle}
 import scalafx.scene.text.Text
 
 import scala.concurrent.{Future, Promise}
+import scala.io.StdIn
 
 class Display() {
   private val PlayerRadius = 100
@@ -20,7 +22,7 @@ class Display() {
     minHeight = ScreenSize
   }
 
-  def sink(input: Source[String, ActorRef], display: Display, args: Array[String], client: Client, keyBoardHandler: KeyBoardHandler, output: Sink[Either[String, (List[Player], List[Food])], Future[Done]]): Sink[Either[String, (List[Player], List[Food])], Future[Done]] = Sink.foreach[Either[String, (List[Player], List[Food])]] {
+  def sink(input: Source[String, ActorRef], display: Display, args: Array[String], client: Client, keyBoardHandler: KeyBoardHandler, output: Sink[Either[String, (List[Player], List[Food])], Future[Done]], gui: GUI): Sink[Either[String, (List[Player], List[Food])], Future[Done]] = Sink.foreach[Either[String, (List[Player], List[Food])]] {
     case Left(gameEndedMessage) =>
       Platform.runLater {
         val dialog = new TextInputDialog() {
@@ -31,11 +33,30 @@ class Display() {
         val result = dialog.showAndWait()
         result match {
           case Some(name) =>
-            client.playerName = name
+            implicit val system = ActorSystem()
+            implicit val materializer = ActorMaterializer()
+            val client = new Client(name)
+            val display = new Display()
+            val input = Source.actorRef[String](5, OverflowStrategy.dropNew)
+
             val promise = Promise[ActorRef]()
-            val ((inputMat: ActorRef, result), outputMat) = client.run(input, output)
+            val futureInputMat = promise.future
+
+            val keyBoardHandler = new KeyBoardHandler(futureInputMat)
+
+            // Define output before calling display.sink
+            val output: Sink[Either[String, (List[Player], List[Food])], Future[Done]] = Sink.foreach {
+              case Left(gameEndedMessage) => println(gameEndedMessage)
+              case Right((players, foods)) => println(s"Players: $players, Foods: $foods")
+            }
+
+            val sink = display.sink(input, display, args, client, keyBoardHandler, output, gui)
+
+            print("Starting client")
+            val ((inputMat, result), outputMat) = client.run(input, sink)
             promise.success(inputMat)
-            keyBoardHandler.keyboardEventsReceiver = promise.future
+
+            gui.updateGameState(keyBoardHandler, display)
           case None =>
             System.exit(0)
         }
